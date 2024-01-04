@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CodeHelper.Unity
@@ -50,6 +51,18 @@ namespace CodeHelper.Unity
 
         /// <summary> Reverse the active self</summary>
         public static void ReverseActive(this GameObject self) => self.SetActive(!self.activeSelf);
+
+
+        /// <returns>If given go has the component returns this and do action</returns>
+        public static T HasComponentDo<T>(this GameObject self, Action<T> action) where T : Component
+        {
+            if (self.TryGetComponent(out T comp))
+            {
+                action(comp);
+                return comp;
+            }
+            return null;
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
 
 namespace CodeHelper
 {
@@ -185,6 +184,13 @@ namespace CodeHelper.Unity
         {
             if (self.IsEmpty()) throw new ArgumentNullException("List is empty");
             foreach (GameObject comp in self) comp.SetActive(true);
+        }
+
+        public static List<Vector3> GetPositions(this IList<Transform> self)
+        {
+            var vectorsList = new List<Vector3>();
+            foreach (var item in self) vectorsList.Add(item.position);
+            return vectorsList;
         }
     }
 }

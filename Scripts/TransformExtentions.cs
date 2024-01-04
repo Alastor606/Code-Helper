@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CodeHelper.Unity
 {
+    using CodeHelper.Mathematics;
     public static class TransformExtentions
     {
         /// <returns> True if transform has child gameObjects </returns>
@@ -25,6 +26,17 @@ namespace CodeHelper.Unity
             foreach (Transform child in self) Object.Destroy(child.gameObject);
             if (self.HasChildren()) return false;
             else return true;
+        }
+
+        /// <summary>Moves transform by bezier points</summary>
+        /// <param name="way">Points to move there</param>
+        /// <param name="time">value between 0 and 1 to move from fist to last points in way</param>
+        public static void BezieMoves<T>(this T self, List<Transform> way, float time, bool withRotation = false) where T : Transform
+        {
+            if (time < 1) time += 0.005f;
+            else time = 0;
+            self.position = Bezie.GetPoint(way.GetPositions(), time);
+            if(withRotation) self.rotation = Quaternion.LookRotation(Bezie.GetFirstDerivative(way.GetPositions(), time));
         }
     }
 }

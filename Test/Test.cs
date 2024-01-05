@@ -16,9 +16,11 @@ namespace CodeHelper
         [Header("Bezier : ")]
         [SerializeField] private List<Transform> _traectory;
         [SerializeField] private Transform _bezierObject;
-        [Header("Circle mover :")]
+        [Header("Circle move :")]
         [SerializeField] private Transform _movableObject;
         [SerializeField] private float _radius;
+        [Header("Polygon move :")]
+        [SerializeField] private List<Transform> _polygonTest;
         private float _time;
         private readonly int[] _testArray = new int[] { 1,2,3,4,5};
         private bool _testFlag = true;
@@ -46,8 +48,8 @@ namespace CodeHelper
             _player.TransferControl2D(_speed, 15, KeyCode.Space);
             if (_time < 1) _time += 0.005f;
             else _time = 0;
-            _bezierObject.SetPositionAndRotation(Bezie.GetPoint(_traectory.GetPositions(), _time), Quaternion.LookRotation(Bezie.GetFirstDerivative(_traectory.GetPositions(), _time)));
-            _movableObject.position = CircleMove.MoveByCircle(_player.position, _radius, _time); 
+            _bezierObject.BezieMoves(_traectory, _time);
+            _movableObject.position = MathMoving.MoveByPolygon(_polygonTest.GetPositions(), _time); 
         }
     }
 }

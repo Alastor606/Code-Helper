@@ -35,8 +35,8 @@ namespace CodeHelper.Unity
         {
             if (time < 1) time += 0.005f;
             else time = 0;
-            self.position = Bezie.GetPoint(way.GetPositions(), time);
-            if(withRotation) self.rotation = Quaternion.LookRotation(Bezie.GetFirstDerivative(way.GetPositions(), time));
+            self.position = MathMoving.BezieMove(way.GetPositions(), time);
+            if(withRotation) self.rotation = Quaternion.LookRotation(MathMoving.FirstDerivative(way.GetPositions(), time));
         }
     }
 }

@@ -31,11 +31,11 @@ namespace CodeHelper.Unity
         /// <summary>Moves transform by bezier points</summary>
         /// <param name="way">Points to move there</param>
         /// <param name="time">value between 0 and 1 to move from fist to last points in way</param>
-        public static void BezieMoves<T>(this T self, List<Transform> way, float time, bool withRotation = false) where T : Transform
+        public static void BezieMoves<T>(this T self, List<Transform> way, float time, bool withRotation = false, bool withSmoothBack = false) where T : Transform
         {
             if (time < 1) time += 0.005f;
             else time = 0;
-            self.position = MathMoving.BezieMove(way.GetPositions(), time);
+            self.position = MathMoving.BezieMove(way.GetPositions(), time, withSmoothBack);
             if(withRotation) self.rotation = Quaternion.LookRotation(MathMoving.FirstDerivative(way.GetPositions(), time));
         }
     }

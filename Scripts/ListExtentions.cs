@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static UnityEditor.Progress;
 
 namespace CodeHelper
 {
@@ -51,11 +52,15 @@ namespace CodeHelper
             else return self.First();
         }
 
-        /// <summary> All objects in collection invokes action </summary>
+        /// <summary> 
+        /// All objects in collection invokes action 
+        /// <br/><br/>Note :<br/>Does not change the reference value of structures such as : int, float<br/>
+        /// But change values in class such as Wallet.Add(14) and so on
+        /// </summary>
         public static void AllDo<T>(this IList<T> self, Action<T> action)
         {
             if (self.IsEmpty()) throw new ArgumentNullException("List is empty");
-            foreach (var item in self) action(item);
+            foreach(var item in self) action(item);
         }
 
         /// <summary> All objects in collection except one invokes action  </summary>

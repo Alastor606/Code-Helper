@@ -24,9 +24,10 @@ namespace CodeHelper.Mathematics
         /// <param name="time">Time, value between 0,1</param>
         /// <returns>Retruns the point of way by time</returns>
         /// <exception cref="ArgumentException">points count must be more then 2</exception>
-        public static Vector3 BezieMove(List<Vector3> points, float time)
+        public static Vector3 BezieMove(List<Vector3> points, float time, bool withSmoothBack)
         {
             if (points.Count < 2) throw new ArgumentException("List count must be more then 2");
+            if (withSmoothBack) points.Add(points.First());
             while (points.Count > 1)
             {
                 List<Vector3> tempPoints = new();
@@ -53,13 +54,10 @@ namespace CodeHelper.Mathematics
         }
 
         /// <summary>Used to move an object in a straight line through all points in the collection </summary>
-        public static Vector3 MoveByPolygon(List<Vector3> points, float time)
+        public static Vector3 MoveByPolygon(List<Vector3> points, float time, bool withSmoothBack = false)
         {
-            if (points.Count < 2)
-            {
-                throw new ArgumentException("The list of points should contain at least two points for movement.");
-                return Vector3.zero;
-            }
+            if (points.Count < 2) throw new ArgumentException("The list of points should contain at least two points for movement.");
+            if (withSmoothBack) points.Add(points.First());
 
             var totalPathLength = CalculateTotalPathLength(points);
             var dist = time * totalPathLength;

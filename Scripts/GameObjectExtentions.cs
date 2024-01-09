@@ -63,6 +63,29 @@ namespace CodeHelper.Unity
             }
             return null;
         }
+
+        /// <summary>Swaps objects positions </summary>
+        public static void Swap(this GameObject self, GameObject target)
+        {
+            var currentPos = self.Position();
+            self.SetPosition(target.Position());
+            target.SetPosition(currentPos);
+        }
+
+        /// <returns>Position of gameobject</returns>
+        public static Vector3 Position(this GameObject self) => self.transform.position;
+
+        /// <summary>Set transform position </summary>
+        /// <param name="pos">Position to set</param>
+        public static void SetPosition(this GameObject self, Vector3 pos) => self.transform.position = pos;
+
+        /// <summary>Set transform position </summary>
+        /// <param name="pos">Transform to set position from</param>
+        public static void SetPosition(this GameObject self, Transform pos) => self.SetPosition(pos.position);
+
+        /// <summary>Set transform position</summary>
+        /// <param name="pos">GameObject to set position from</param>
+        public static void SetPosition(this GameObject self, GameObject pos) => self.SetPosition(pos.Position());
     }
 
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using CodeHelper.Unity;
 using System.Collections.Generic;
-using CodeHelper.Mathematics;
 
 namespace CodeHelper
 {
@@ -45,6 +44,7 @@ namespace CodeHelper
                 this.Instantiate(_movableObject.gameObject, _player.position, _player.transform);
                 print("bool.Reverse gets link of value: " + _testFlag.Reverse());
                 print("Method array[] allDo every component of collection do the action(now print(value)) : ");
+                _player.gameObject.SetName("Igrok");
                 _materialChange.ChangeColor3D(0, 0, 0, 0.5f);
             });
         }
@@ -52,10 +52,10 @@ namespace CodeHelper
         private void Update()
         {
             _player.TransferControl2D(_speed, 15, KeyCode.Space);
-            if (_time < 1) _time += 0.005f;
+            if (_time < 1) _time += 0.01f;
             else _time = 0;
-            _bezierObject.BezieMoves(_traectory, _time);
-            _movableObject.position = MathMoving.MoveByPolygon(_polygonTest.GetPositions(), _time, true); 
+            _bezierObject.MoveByCurve(_traectory, _time);
+            _movableObject.MoveByPolygon(_polygonTest, _time, true);
         }
     }
 }

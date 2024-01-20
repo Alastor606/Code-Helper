@@ -42,7 +42,10 @@ namespace CodeHelper.Unity
         /// <param name="color"></param>
         public static void ChangeColor3D(this GameObject self, Color color) => self.GetComponent<Renderer>().material.color = color;
 
-        /// <summary>Changing Color of material in current object </summary>
+        /// <summary>
+        /// Changing Color of material in current object <br></br>
+        /// <b>[Note]</b>Alpha channel valuse must be between 0,1
+        /// </summary>
         /// <param name="a">Muse be value between 0, 1</param>
         public static void ChangeColor3D(this GameObject self, float r, float g, float b, float a = 1) => self.GetComponent<Renderer>().material.color = new Color(r, g, b, a);
 
@@ -53,7 +56,7 @@ namespace CodeHelper.Unity
         public static void ReverseActive(this GameObject self) => self.SetActive(!self.activeSelf);
 
 
-        /// <returns>If given go has the component returns this and do action</returns>
+        /// <returns>If gabeObject has the given component returns this and do action</returns>
         public static T HasComponentDo<T>(this GameObject self, Action<T> action) where T : Component
         {
             if (self.TryGetComponent(out T comp))
@@ -86,6 +89,9 @@ namespace CodeHelper.Unity
         /// <summary>Set transform position</summary>
         /// <param name="pos">GameObject to set position from</param>
         public static void SetPosition(this GameObject self, GameObject pos) => self.SetPosition(pos.Position());
+
+        /// <summary>Set name of gameObject </summary>
+        public static void SetName(this GameObject self, string name) => self.name = name;
     }
 
 }

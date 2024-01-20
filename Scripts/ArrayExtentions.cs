@@ -142,6 +142,20 @@ namespace CodeHelper
             return false;
         }
 
+        public static bool Contains<T>(this T[] self, T value, out int index)
+        {
+            for (int i = 0; i < self.Length - 1; i++)
+            {
+                if (self[i].Equals(value))
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            index = -1;
+            return false;
+        }
+
         /// <summary>If self has all values of container returns true</summary>
         /// <param name="container">Given container to compare</param>
         public static bool Equals<T>(this T[] self, T[] container)

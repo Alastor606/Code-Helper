@@ -23,30 +23,34 @@ namespace CodeHelper
         [SerializeField] private List<Transform> _polygonTest;
         
         private float _time;
-        private readonly int[] _testArray = new int[] { 1,2,3,4,5};
+        private readonly int[] _testArray = new int[] { 5,4,3,2,1};
         private bool _testFlag = true;
         
         private void Start()
         {
-            print("Method add, 5.add95 = " + _testIndex.Add(95));
-            _player.FreezeRotation(true);
-            print("All numbers without index 5 prints value :");
-            _testArray.AllDoWithout((v) => print(v),5);
-            print("Test Flag : " + _testFlag);
-            _testObjects.AllDo((obj) => obj.Index+=100);
-            _testInt.AllDo((value) => value += 200);
-            print("Objects");
-            _testObjects.AllDo((obj) => print(obj.Index));
-            print("ints");
-            _testInt.AllDo((value) => print(value));
-            this.WaitAndDo(2,() =>
+            foreach(var item in _testArray.Reverse())
             {
-                this.Instantiate(_movableObject.gameObject, _player.position, _player.transform);
-                print("bool.Reverse gets link of value: " + _testFlag.Reverse());
-                print("Method array[] allDo every component of collection do the action(now print(value)) : ");
-                _player.gameObject.SetName("Igrok");
-                _materialChange.ChangeColor3D(0, 0, 0, 0.5f);
-            });
+                print(item);
+            }
+            //print("Method add, 5.add95 = " + _testIndex.Add(95));
+            //_player.FreezeRotation(true);
+            //print("All numbers without index 5 prints value :");
+            //_testArray.AllDoWithout((v) => print(v),5);
+            //print("Test Flag : " + _testFlag);
+            //_testObjects.AllDo((obj) => obj.Index+=100);
+            //_testInt.AllDo((value) => value += 200);
+            //print("Objects");
+            //_testObjects.AllDo((obj) => print(obj.Index));
+            //print("ints");
+            //_testInt.AllDo((value) => print(value));
+            //this.WaitAndDo(2,() =>
+            //{
+            //    this.Instantiate(_movableObject.gameObject, _player.position, _player.transform);
+            //    print("bool.Reverse gets link of value: " + _testFlag.Reverse());
+            //    print("Method array[] allDo every component of collection do the action(now print(value)) : ");
+            //    _player.gameObject.SetName("Igrok");
+            //    _materialChange.ChangeColor3D(0, 0, 0, 0.5f);
+            //});
         }
 
         private void Update()

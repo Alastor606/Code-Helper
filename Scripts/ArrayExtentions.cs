@@ -177,6 +177,17 @@ namespace CodeHelper
             if(index == container.Length) return true;
             return false;
         }
+
+        /// <summary>Reverse array </summary>
+        /// <returns>Reversed array</returns>
+        public static T[] Reverse<T>(this T[] self)
+        {
+            var length = self.Length;
+            var reversed = new T[length];
+            for (int i = 0; i < length; i++) reversed[i] = self[length - i - 1];
+            
+            return reversed;
+        }
     }
 }
 

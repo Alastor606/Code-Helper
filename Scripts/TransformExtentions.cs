@@ -11,11 +11,11 @@ namespace CodeHelper.Unity
             self.childCount > 0;
 
         /// <summary> Add children gameObject to transform </summary>
-        public static GameObject Add<T>(this T self, GameObject additional) where T : Transform =>
+        public static T Add<T>(this Transform self, T additional) where T : Object =>
             Object.Instantiate(additional, self);
-
+        
         /// <summary> Add list of object to children of transform </summary>
-        public static void Add<T>(this T self, List<GameObject> additional) where T : Transform
+        public static void Add<T>(this Transform self, List<T> additional) where T : Object
         {
             foreach (var item in additional) Object.Instantiate(item, self);
         }
@@ -42,6 +42,9 @@ namespace CodeHelper.Unity
         /// <param name="time">value between 0 and 1 to move from fist to last points in way</param>
         public static void MoveByPolygon<T>(this T self, List<Transform> way, float time, bool withSmoothBack = false) where T : Transform =>
             self.position = MathMoving.MoveByPolygon(way.GetPositions(), time, withSmoothBack);
+
+        public static void MoveByCircle<T>(this T self, float radius, float time) where T : Transform =>
+            self.position = MathMoving.MoveByCircle(self.position, radius, time);
         
     }
 }

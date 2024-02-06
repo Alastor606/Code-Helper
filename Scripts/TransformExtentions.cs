@@ -10,6 +10,9 @@ namespace CodeHelper.Unity
         public static bool HasChildren<T>(this T self) where T : Transform =>
             self.childCount > 0;
 
+         public static bool HasChildren(this GameObject self) =>
+             self.transform.childCount > 0;
+
         /// <summary> Add children gameObject to transform </summary>
         public static T Add<T>(this Transform self, T additional) where T : Object =>
             Object.Instantiate(additional, self);

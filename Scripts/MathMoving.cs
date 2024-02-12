@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace CodeHelper.Mathematics
 {
-    public class MathMoving
+    internal class MathMoving
     {
         /// <summary>Use function to moves object by circle</summary>
         /// <param name="center">Center of moving</param>
         /// <param name="radius">Moving radius</param>
         /// <returns>Point in enviroment by time</returns>
-        public static Vector3 MoveByCircle(Vector3 center, float radius, float time)
+        internal static Vector3 MoveByCircle(Vector3 center, float radius, float time)
         {
             time = Mathf.Clamp01(time);
             float angle = time * 2 * Mathf.PI;
@@ -24,7 +24,7 @@ namespace CodeHelper.Mathematics
         /// <param name="time">Time, value between 0,1</param>
         /// <returns>Retruns the point of way by time</returns>
         /// <exception cref="ArgumentException">points count must be more then 2</exception>
-        public static Vector3 BezieMove(List<Vector3> points, float time, bool withSmoothBack)
+        internal static Vector3 BezieMove(List<Vector3> points, float time, bool withSmoothBack)
         {
             if (points.Count < 2) throw new ArgumentException("List count must be more then 2");
             if (withSmoothBack) points.Add(points.First());
@@ -45,7 +45,7 @@ namespace CodeHelper.Mathematics
         /// <param name="way">Way of moving </param>
         /// <param name="time">Time, value between 0,1</param>
         /// <returns>Direction of move by time</returns>
-        public static Vector3 FirstDerivative(List<Vector3> way, float time)
+        internal static Vector3 FirstDerivative(List<Vector3> way, float time)
         {
             var n = way.Count - 1;
             Vector3 result = Vector3.zero;
@@ -54,7 +54,7 @@ namespace CodeHelper.Mathematics
         }
 
         /// <summary>Used to move an object in a straight line through all points in the collection </summary>
-        public static Vector3 MoveByPolygon(List<Vector3> points, float time, bool withSmoothBack = false)
+        internal static Vector3 MoveByPolygon(List<Vector3> points, float time, bool withSmoothBack = false)
         {
             if (points.Count < 2) throw new ArgumentException("The list of points should contain at least two points for movement.");
             if (withSmoothBack) points.Add(points.First());

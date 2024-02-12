@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 namespace CodeHelper.Unity
 {
-    public static class ButtonExtentions
+    internal static class ButtonExtentions
     {
         /// <summary>
         /// Sets Actionswhich work once in a while
         /// </summary>
         /// <param name="actions"></param>
-        public static void SetDisposableListeners(this Button self, List<Action<Button>> actions)
+        internal static void SetDisposableListeners(this Button self, List<Action<Button>> actions)
         {
             self.onClick.AddListener(DoAction);
             void DoAction()
@@ -24,7 +24,7 @@ namespace CodeHelper.Unity
         /// Sets Action which works once in a while
         /// </summary>
         /// <param name="action"></param>
-        public static void SetDisposableListener(this Button self, Action<Button> action)
+        internal static void SetDisposableListener(this Button self, Action<Button> action)
         {
             self.onClick.AddListener(DoAction);
             void DoAction()
@@ -38,7 +38,7 @@ namespace CodeHelper.Unity
         /// If true on click removes interectable, else do nothing
         /// </summary>
         /// <param name="value"></param>
-        public static void OffInterectableOnClick(this Button self, bool value)
+        internal static void OffInterectableOnClick(this Button self, bool value)
         {
             self.onClick.AddListener(() =>
             {
@@ -51,7 +51,7 @@ namespace CodeHelper.Unity
         /// If true on click setActive false, else do nothing
         /// </summary>
         /// <param name="value"></param>
-        public static void OffOnClick(this Button self, bool value)
+        internal static void OffOnClick(this Button self, bool value)
         {
             self.onClick.AddListener(() =>
             {

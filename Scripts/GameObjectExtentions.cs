@@ -74,6 +74,14 @@ namespace CodeHelper.Unity
             target.SetPosition(currentPos);
         }
 
+        /// <summary>Swaps objects positions </summary>
+        internal static void Swap(this GameObject self, Transform target)
+        {
+            var currentPos = self.Position();
+            self.SetPosition(target.position);
+            target.position = currentPos;
+        }
+
         /// <returns>Position of gameobject</returns>
         internal static Vector3 Position(this GameObject self) => self.transform.position;
 

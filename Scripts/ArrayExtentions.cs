@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 
 namespace CodeHelper
 {
     internal static class ArrayExtentions
     {
+        private readonly static ArgumentException MainEx = new ("array is empty");
         /// <returns>First object of collection</returns>
         internal static T First<T>(this T[] self) => self[0];
 
@@ -21,8 +23,30 @@ namespace CodeHelper
         /// <returns> Random value of collection </returns>
         internal static T GetRandom<T>(this T[] self)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             return self[UnityEngine.Random.Range(0, self.Length - 1)];
+        }
+
+        /// <summary> Get n random elements of collection</summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        internal static T[] GetRandom<T>(this T[] self, int count)
+        {
+            if (self.IsEmpty()) throw MainEx;
+            if (self.Length - 1 < count) throw new ArgumentException($"Array has {self.Length} values, but you try get {count}");
+            List<T> res = new();
+            List<int> indexes = new();
+            for (int i = 0; i < count; i++)
+            {
+                int index = new Random().Next(0,self.Length);
+                while(indexes.Contains(index))
+                {
+                    index = new Random().Next(0, self.Length);
+                }
+                res.Add(self[index]);
+                indexes.Add(index);
+            }
+            return res.ToArray();
         }
 
         /// <summary> Find equals your`s gameObjcts </summary>
@@ -42,7 +66,7 @@ namespace CodeHelper
         /// <returns> Object of collection equal yours if collection contains this, else returns the first object</returns>
         internal static T GetEqualsOrFirst<T>(this T[] self, T reference)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             foreach(var item in self) if(item.Equals(reference))return item;
             
             return self.First();
@@ -51,14 +75,14 @@ namespace CodeHelper
         /// <summary> All objects in collection invokes action </summary>
         internal static void AllDo<T>(this T[] self, Action<T> action)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             foreach (var item in self) action(item);
         }
 
         /// <summary> All objects in collection except one invokes action  </summary>
         internal static void AllDoWithout<T>(this T[] self, Action<T> action, T exception)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             if (!self.Contains(exception)) throw new ArgumentException("Array didnt contains exteption object");
             foreach (var item in self)
             {
@@ -70,7 +94,7 @@ namespace CodeHelper
         /// <summary> All objects in collection except list invokes action  </summary>
         internal static void AllDoWithout<T>(this T[] self, Action<T> action, T[] exceptions)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             if (!self.Equals(exceptions)) throw new ArgumentException($"Array didnt equal {exceptions}");
 
             foreach (var item in self)
@@ -83,7 +107,7 @@ namespace CodeHelper
         /// <summary> One object by index, invokes action  </summary>
         internal static void SingleDo<T>(this T[] self, int index, Action<T> action)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("array is empty");
+            if (self.IsEmpty()) throw MainEx;
             if (self.Length < index) throw new ArgumentOutOfRangeException($"Index out of range : {index}, array count : {self.Length}");
             action(self[index]);
         }
@@ -91,8 +115,8 @@ namespace CodeHelper
         /// <summary> One object by link, invokes action  </summary>
         internal static void SingleDo<T>(this T[] self, T obj, Action<T> action)
         {
-            if (self.IsEmpty()) throw new ArgumentNullException("Array is empty");
-            if (!self.Contains(obj)) throw new ArgumentException($"Array didnt contains {obj}");
+            if (self.IsEmpty()) throw MainEx;
+            if (!self.Contains(obj)) throw new ArgumentException($"Array doesnt contains {obj}");
 
             foreach(var item in self) if (item.Equals(obj)) action(obj);
         }

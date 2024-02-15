@@ -28,7 +28,7 @@ namespace CodeHelper
         
         private void Start()
         {
-            foreach(var item in _testArray.Reverse()) print(item);
+            _testArray.GetRandom(3).AllDo((item) => print(item));
         }
 
         private void Update()

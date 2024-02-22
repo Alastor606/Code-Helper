@@ -31,22 +31,38 @@ namespace CodeHelper.Unity
 
         /// <summary>Change sprite rendere color </summary>
         /// <param name="color">Given color to change</param>
-        internal static void ChangeColor2D(this GameObject self, Color color) => self.GetComponent<SpriteRenderer>().color = color;
+        internal static GameObject ChangeColor2D(this GameObject self, Color color)
+        {
+            self.GetComponent<SpriteRenderer>().color = color;
+            return self;
+        }
 
         /// <summary>Change sprite rendere color </summary>
         /// <param name="color">Given color to change</param>
-        internal static void ChangeColor2D(this GameObject self, float r, float g, float b, float a = 1) => self.GetComponent<SpriteRenderer>().color = new Color(r, g, b, a);
+        internal static GameObject ChangeColor2D(this GameObject self, float r, float g, float b, float a = 1)
+        {
+            self.GetComponent<SpriteRenderer>().color = new Color(r, g, b, a);
+            return self;
+        }
 
         /// <summary>Change color of material in current object </summary>
         /// <param name="color"></param>
-        internal static void ChangeColor3D(this GameObject self, Color color) => self.GetComponent<Renderer>().material.color = color;
+        internal static GameObject ChangeColor3D(this GameObject self, Color color)
+        {
+            self.GetComponent<Renderer>().material.color = color;
+            return self;
+        }
 
         /// <summary>
         /// Changing Color of material in current object <br></br>
         /// <b>[Note]</b>Alpha channel valuse must be between 0,1
         /// </summary>
         /// <param name="a">Muse be value between 0, 1</param>
-        internal static void ChangeColor3D(this GameObject self, float r, float g, float b, float a = 1) => self.GetComponent<Renderer>().material.color = new Color(r, g, b, a);
+        internal static GameObject ChangeColor3D(this GameObject self, float r, float g, float b, float a = 1)
+        {
+            self.GetComponent<Renderer>().material.color = new Color(r, g, b, a);
+            return self;
+        }
 
         /// <returns>Parent GameObject</returns>
         internal static GameObject GetParent(this GameObject self) => self.transform.parent.gameObject;

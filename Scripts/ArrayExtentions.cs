@@ -73,10 +73,11 @@ namespace CodeHelper
         }
 
         /// <summary> All objects in collection invokes action </summary>
-        internal static void AllDo<T>(this T[] self, Action<T> action)
+        internal static T[] AllDo<T>(this T[] self, Action<T> action)
         {
             if (self.IsEmpty()) throw MainEx;
             foreach (var item in self) action(item);
+            return self;
         }
 
         /// <summary> All objects in collection except one invokes action  </summary>
@@ -200,6 +201,12 @@ namespace CodeHelper
             }
             if(index == container.Length) return true;
             return false;
+        }
+
+        internal static T Where<T>(this T[] self, Func<T, bool> predicate) 
+        {
+            foreach (var item in self) if (predicate(item)) return item;
+            throw new ArgumentException("There are no objects in this collection that match the given condition");
         }
 
         /// <summary>Reverse array </summary>

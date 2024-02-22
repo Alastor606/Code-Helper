@@ -1,6 +1,7 @@
 using UnityEngine;
 using CodeHelper.Unity;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace CodeHelper
 {
@@ -21,14 +22,13 @@ namespace CodeHelper
         [SerializeField] private float _radius;
         [Header("Polygon move :")]
         [SerializeField] private List<Transform> _polygonTest;
+        [SerializeField] private GameObject _bullet;
         
         private float _time;
-        private readonly int[] _testArray = new int[] { 5,4,3,2,1};
-        private bool _testFlag = true;
         
         private void Start()
         {
-            _testArray.GetRandom(3).AllDo((item) => print(item));
+            
         }
 
         private void Update()

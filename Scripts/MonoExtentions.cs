@@ -7,16 +7,43 @@ namespace CodeHelper.Unity
     {
 
         /// <summary>Starts local coroutine, wait given time and invoke action </summary>
-        /// <param name="time">Delay</param>
-        internal static void WaitAndDo(this MonoBehaviour self, float delay, Action toDo)
+        /// <param name="delay">Delay</param>
+        internal static void WaitAndDo(this MonoBehaviour self, float delay, Action<MonoBehaviour> toDo)
         {
             self.StartCoroutine(Waiter());
             IEnumerator Waiter()
             {
                 yield return new WaitForSeconds(delay);
-                toDo.Invoke();
+                toDo.Invoke(self);
             }
         }
+
+        /// <summary>Starts local coroutine, wait given time and invoke action </summary>
+        /// <param name="delay">Delay</param>
+        internal static void WaitAndDo<T>(this T self, float delay, Action<T> toDo) where T : UnityEngine.Object
+        {
+            var go = Camera.main.gameObject.GetComponent<MonoBehaviour>();
+            go.StartCoroutine(Waiter());
+            IEnumerator Waiter()
+            {
+                yield return new WaitForSeconds(delay);
+                toDo.Invoke(self);
+            }
+        }
+
+        internal static T WaitAndDoWithReturn<T>(this T self, float delay, Action<T> toDo) where T : UnityEngine.Object
+        {
+            var go = Camera.main.gameObject.GetComponent<MonoBehaviour>();
+            
+            go.StartCoroutine(Waiter());
+            IEnumerator Waiter()
+            {
+                yield return new WaitForSeconds(delay);
+                toDo.Invoke(self);
+            }
+            return self;
+        }
+
 
         /// <summary>Instanse object with given params</summary>
         internal static T Instantiate<T>(this MonoBehaviour self, T prefab, Vector3 position, Transform parent = null, Quaternion rotation = default) where T : UnityEngine.Object
@@ -26,6 +53,37 @@ namespace CodeHelper.Unity
             return obj;
         }
 
+        /// <summary> Log the object value to unity console</summary>
+        internal static void Print<T>(this T self) => Debug.Log(self);
+
+        /// <summary> Log error the object value to unity console</summary>
+        internal static void PrintError<T>(this T self) => Debug.LogError(self);
+
+        /// <summary> Log the all objects to unity console</summary>
+        internal static void PrintAll<T>(this T[] self, bool withIndex = false)
+        {
+            for (int i = 0; i < self.Length; i++)
+                Debug.Log(withIndex == true ? $"Index - {i} \n Value - " + self[i] : self[i]) ;
+            
+        }
+
+
+        /// <summary> Log error the all objects to unity console</summary>
+        internal static void PrintErrorAll<T>(this T[] self) => self.AllDo((x) => Debug.LogError(x));
+
+        /// <summary> Log object from collection by index to unity console</summary>
+        internal static void Print<T>(this T[] self, int index) => Debug.Log(self[index]);
+
+        internal static void Destroy<T>(this T self) where T : UnityEngine.Object => UnityEngine.Object.Destroy(self);
+
+        internal static void Destroy<T>(this T self, float time) where T : UnityEngine.Object => UnityEngine.Object.Destroy(self, time);
+
+        internal static T Instance<T>(this T self, Vector3 pos, Quaternion rot = default) where T : UnityEngine.Object => 
+            UnityEngine.Object.Instantiate(self,pos, rot);
+
+
+        /// <summary> Log`s the object name, message prints after the name</summary>
+        internal static void PrintName<T>(this T self, string message = null) where T : UnityEngine.Object => Debug.Log(self.name + message); 
     }
 }
 

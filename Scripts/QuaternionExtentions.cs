@@ -4,7 +4,7 @@ namespace CodeHelper.Unity
 {
     internal static class QuaternionExtentions
     {
-        internal static Quaternion Zero(this Quaternion self) => new(0, 0, 0, 0);
+        internal static Quaternion SetZero(ref this Quaternion self) => self = Quaternion.Euler(0,0,0);
     }
 }
 

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+
 namespace CodeHelper
 {
     internal static class NumericExtentions
     {
-        internal static int Add(ref this int self, int additional)  => self += additional;
+        internal static int Add(ref this int self, int additional) => self += additional;
         internal static float Add(ref this float self, float additional) => self += additional;
         internal static decimal Add(ref this decimal self, decimal additional) => self += additional;
         internal static double Add(ref this double self, double additional) => self += additional;
@@ -22,6 +24,29 @@ namespace CodeHelper
         internal static decimal Percent(this decimal self, decimal percents) => self / 100 * percents;
         internal static double Percent(this double self, double percents) => self / 100 * percents;
 
+
+        internal static int[] ToArray(this int self)
+        {
+            var st = self.ToString();
+            List<int> results = new();
+            foreach (var item in st) results.Add(int.Parse(item.ToString()));
+            return results.ToArray();
+        }
+
+        internal static int Reverse(ref this int self)
+        {
+            var arr = self.ToArray();
+            int res = 0, multiply = 1;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                res += arr[i] * multiply;
+                multiply *= 10;
+            }
+            self = res;
+            return self;
+        }
+
+        internal static bool IsEven(this int self) => self % 2 == 0;
     }
 }
 

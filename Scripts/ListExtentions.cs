@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using static UnityEditor.Progress;
 
 namespace CodeHelper
 {
@@ -58,10 +57,10 @@ namespace CodeHelper
         /// <br/><br/>Note :<br/>Does not change the reference value of structures such as : int, float<br/>
         /// But change values in class such as Wallet.Add(14) and so on
         /// </summary>
-        internal static void AllDo<T>(this IList<T> self, Action<T> action)
+        internal static void AllDo<T>(this IList<T> self, Action<T> action) 
         {
             if (self.IsEmpty()) throw MainEx;
-            foreach(var item in self) action(item);
+            foreach(var item in self) action.Invoke(item);
         }
 
         /// <summary> All objects in collection except one invokes action  </summary>
@@ -146,7 +145,6 @@ namespace CodeHelper
             for (int i = self.Count - 1- startIndex; i >= lastIndex; i--) self[i] = newValue;
         }
 
-
         /// <summary>Swaps first and second values </summary>
         internal static void Swap<T>(this IList<T> self, T firstValue, T secondValue)
         {
@@ -157,6 +155,12 @@ namespace CodeHelper
             var secondIndex = self.IndexOf(secondValue);
             self[self.IndexOf(firstValue)] = secondValue;
             self[secondIndex] = value;
+        }
+
+        internal static T Where<T>(this IList<T> self, Func<T, bool> predicate)
+        {
+            foreach (var item in self) if (predicate(item)) return item;
+            throw new ArgumentException("There are no objects in this collection that match the given condition");
         }
     }
 }
@@ -195,6 +199,7 @@ namespace CodeHelper.Unity
             foreach (GameObject comp in self) comp.SetActive(true);
         }
 
+        /// <returns>The array of given tramsforms positions</returns>
         internal static List<Vector3> GetPositions(this IList<Transform> self)
         {
             var vectorsList = new List<Vector3>();

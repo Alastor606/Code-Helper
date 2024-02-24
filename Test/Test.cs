@@ -28,12 +28,12 @@ namespace CodeHelper
         
         private void Start()
         {
-            _bullet.Instance(Vector2.zero).SetPosition(_player.transform).SetRotation(15, 15, 15).PrintName();
         }
 
         private void Update()
         {
             _player.TransferControl2D(_speed, 15, KeyCode.Space);
+            
             if (_time < 1) _time += 0.01f;
             else _time = 0;
             _bezierObject.MoveByCurve(_traectory, _time);

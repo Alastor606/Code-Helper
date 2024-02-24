@@ -59,8 +59,19 @@ namespace CodeHelper.Unity
         /// <summary>Moves transform by 2d Circle </summary>
         /// <param name="radius"></param>
         /// <param name="time"></param>
-        internal static void MoveByCircle<T>(this T self, float radius, float time) where T : Transform =>
-            self.position = MathMoving.MoveByCircle(self.position, radius, time);
+        internal static void MoveByCircle<T>(this T self, float radius, float time, Transform center) where T : Transform
+        {
+            if(self != null)self.position = MathMoving.MoveByCircle(center.position, radius, time);
+        }
+
+        /// <summary>Moves transform by 2d Circle </summary>
+        /// <param name="radius"></param>
+        /// <param name="time"></param>
+        internal static void MoveByCircle<T>(this T self, float radius, float time, Vector3 center) where T : Transform
+        {
+            if (self != null) self.position = MathMoving.MoveByCircle(center, radius, time);
+        }
+            
     }
 }
 

@@ -124,7 +124,6 @@ namespace CodeHelper.Unity
             return self;
         }
 
-
         /// <summary>Set gameobject transform rotation </summary>
         internal static GameObject SetRotation(this GameObject self, float x, float y, float z)
         {

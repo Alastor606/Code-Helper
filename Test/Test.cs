@@ -28,7 +28,7 @@ namespace CodeHelper
         
         private void Start()
         {
-            
+            _bullet.Instance(Vector2.zero).SetPosition(_player.transform).SetRotation(15, 15, 15).PrintName();
         }
 
         private void Update()

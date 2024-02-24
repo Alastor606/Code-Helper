@@ -103,18 +103,34 @@ namespace CodeHelper.Unity
 
         /// <summary>Set transform position </summary>
         /// <param name="pos">Position to set</param>
-        internal static void SetPosition(this GameObject self, Vector3 pos) => self.transform.position = pos;
+        internal static GameObject SetPosition(this GameObject self, Vector3 pos)
+        {
+            self.transform.position = pos;
+            return self;
+        }
 
         /// <summary>Set transform position </summary>
         /// <param name="pos">Transform to set position from</param>
-        internal static void SetPosition(this GameObject self, Transform pos) => self.SetPosition(pos.position);
+        internal static GameObject SetPosition(this GameObject self, Transform pos) => self.SetPosition(pos.position);
 
         /// <summary>Set transform position</summary>
         /// <param name="pos">GameObject to set position from</param>
-        internal static void SetPosition(this GameObject self, GameObject pos) => self.SetPosition(pos.Position());
+        internal static GameObject SetPosition(this GameObject self, GameObject pos) => self.SetPosition(pos.Position());
 
         /// <summary>Set name of gameObject </summary>
-        internal static void SetName(this GameObject self, string name) => self.name = name;
+        internal static GameObject SetName(this GameObject self, string name)
+        {
+            self.name = name;
+            return self;
+        }
+
+
+        /// <summary>Set gameobject transform rotation </summary>
+        internal static GameObject SetRotation(this GameObject self, float x, float y, float z)
+        {
+            self.transform.rotation = Quaternion.Euler(x, y, z);
+            return self;
+        }
     }
 
 }

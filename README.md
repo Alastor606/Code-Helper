@@ -1,6 +1,7 @@
 There some extentions methods for comfort programming in Unity, as Example
 
 Method : IsEmpty
+
 Description :  Check collection length
  This returns : True if collection is empty
 

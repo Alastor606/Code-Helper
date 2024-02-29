@@ -25,6 +25,7 @@ namespace CodeHelper
         [SerializeField] private GameObject _bullet;
         
         private float _time;
+        private int[] _testArray = new int[] { 1,2,3,4,5};
         
         private void Start()
         {

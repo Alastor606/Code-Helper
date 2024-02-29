@@ -167,6 +167,8 @@ namespace CodeHelper
             return false;
         }
 
+        /// <summary> Checks if a value is stored there and retun the index of it</summary>
+        /// <returns>True if contains</returns>
         internal static bool Contains<T>(this T[] self, T value, out int index)
         {
             for (int i = 0; i < self.Length - 1; i++)
@@ -203,7 +205,9 @@ namespace CodeHelper
             return false;
         }
 
-        internal static T Where<T>(this T[] self, Func<T, bool> predicate) 
+        /// <summary>finds first object matching the condition </summary>
+        /// <returns>First matching object</returns>
+        internal static T Select<T>(this T[] self, Func<T, bool> predicate) 
         {
             foreach (var item in self) if (predicate(item)) return item;
             throw new ArgumentException("There are no objects in this collection that match the given condition");
@@ -218,6 +222,15 @@ namespace CodeHelper
             for (int i = 0; i < length; i++) reversed[i] = self[length - i - 1];
             
             return reversed;
+        }
+
+        /// <summary>finds all objects matching the condition </summary>
+        /// <returns>array of matching objects</returns>
+        internal static T[] SelectAll<T>(this T[] self, Func<T, bool> predicate)
+        {
+            List<T> result = new();
+            foreach (var item in self) if (predicate(item)) result.Add(item);
+            return result.ToArray();
         }
     }
 }

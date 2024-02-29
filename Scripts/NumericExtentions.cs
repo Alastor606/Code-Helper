@@ -46,6 +46,8 @@ namespace CodeHelper
             return self;
         }
 
+
+        /// <returns>True if number % 2 == 0</returns>
         internal static bool IsEven(this int self) => self % 2 == 0;
     }
 }

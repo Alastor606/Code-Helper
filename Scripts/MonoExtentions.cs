@@ -1,8 +1,9 @@
 namespace CodeHelper.Unity
 {
     using System;
-    using System.Collections;
     using UnityEngine;
+    using System.Collections;
+
     internal static class MonoExtentions
     {
 
@@ -46,7 +47,7 @@ namespace CodeHelper.Unity
 
 
         /// <summary>Instanse object with given params</summary>
-        internal static T Instantiate<T>(this MonoBehaviour self, T prefab, Vector3 position, Transform parent = null, Quaternion rotation = default) where T : UnityEngine.Object
+        internal static T Instance<T>(this MonoBehaviour self, T prefab, Vector3 position, Transform parent = null, Quaternion rotation = default) where T : UnityEngine.Object
         {
             var rot = rotation == default ? Quaternion.identity : rotation;
             var obj = parent == null ? UnityEngine.Object.Instantiate(prefab, position, rot) : UnityEngine.Object.Instantiate(prefab, parent);

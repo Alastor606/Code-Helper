@@ -41,11 +41,25 @@ void MyFoo(GameObject someObj)
 }
 ```
 
-### And one of most interesting is the TransferControl2D Method
+### And one of most convenient is the TransferControl2D Method
 ```cs
 void Update()
 {
     _rigidobdy.TransferControl2D(_speed, _jumpForce, KeyCode.Space); // Must be called only in Update
+}
+```
+
+### Also you can move objects along given trajectories bu Bezier curve and just in straight lines
+```cs
+[SerializeField] private List<Transform> _traectory, _polygonTest;
+[SerializeField] private Transform _bezierObject, _movableObject;
+
+void Update()
+{
+    if (_time < 1) _time += 0.01f;
+    else _time = 0;
+    _bezierObject.MoveByCurve(_traectory, _time);
+    _movableObject.MoveByPolygon(_polygonTest, _time, true);
 }
 ```
 

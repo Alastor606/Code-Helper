@@ -37,7 +37,7 @@ void MyFoo(GameObject someObj)
 ```cs
 void MyFoo(GameObject someObj)
 {
-    someObj.ToArray(new GameObject(), new GameObject()); // Take params for the new objects
+    var objectArray = someObj.ToArray(new GameObject(), new GameObject()); // Take params for the new objects
 }
 ```
 

@@ -3,6 +3,7 @@ namespace CodeHelper.Unity
     using System;
     using UnityEngine;
     using System.Collections;
+    using System.Collections.Generic;
 
     internal static class MonoExtentions
     {
@@ -80,12 +81,6 @@ namespace CodeHelper.Unity
 
         internal static void Destroy<T>(this T self, float time) where T : UnityEngine.Object => UnityEngine.Object.Destroy(self, time);
 
-        internal static T Instance<T>(this T self, Vector3 pos, Quaternion rot = default, float time = 0) where T : UnityEngine.Object =>
-            UnityEngine.Object.Instantiate(self,pos, rot);
-
-        internal static void Instance<T>(this T self, Vector3 pos,out T obj, Quaternion rot = default, float time = 0) where T : UnityEngine.Object =>
-            obj = UnityEngine.Object.Instantiate(self, pos, rot);
-
 
         /// <summary> Log`s the object name, message prints after the name</summary>
         internal static void PrintName<T>(this T self, string message = null) where T : UnityEngine.Object => Debug.Log(self.name + message);
@@ -96,6 +91,39 @@ namespace CodeHelper.Unity
             array[0] = self;
             for(int i = 0; i < additional.Length; i++) array[i + 1] = additional[i];
             return array;
+        }
+
+        internal static T CheckSphere<T>(this MonoBehaviour self, float radius, Transform startPoint = null) where T : UnityEngine.Object
+        {
+            var results = Physics.OverlapSphere(startPoint == null ? self.transform.position : startPoint.position , radius);
+            foreach (var item in results) if (item.TryGetComponent(out T res)) return res;
+            throw new Exception($"No `{typeof(T)}` objects in given area");
+        }
+
+        internal static bool TryCheckSphere<T>(this MonoBehaviour self, float radius, out T result, Transform startPoint = null)
+        {
+            var results = Physics.OverlapSphere(startPoint == null ? self.transform.position : startPoint.position, radius);
+            foreach (var item in results)
+            {
+                if (item.TryGetComponent(out T res))
+                {
+                    result = res;
+                    return true;
+                }
+            }
+            result = default;
+            return false;
+        }
+
+        internal static T[] CheckSphereAll<T>(this MonoBehaviour self, float radius, Transform startPoint = null) where T : UnityEngine.Object
+        {
+            List<T> res = new();
+            var results = Physics.OverlapSphere(startPoint == null ? self.transform.position : startPoint.position, radius);
+            foreach (var item in results)
+            {
+                if (item.TryGetComponent(out T r)) res.Add(r);
+            }
+            return res.ToArray();
         }
     }
 }

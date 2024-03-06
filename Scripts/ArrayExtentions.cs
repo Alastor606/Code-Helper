@@ -80,6 +80,13 @@ namespace CodeHelper
             return self;
         }
 
+        internal static bool TryAllDo<T>(this T[] self, Action<T> action)
+        {
+            if(self.IsEmpty()) return false;
+            foreach (var item in self) action(item);
+            return true;
+        }
+
         /// <summary> All objects in collection except one invokes action  </summary>
         internal static void AllDoWithout<T>(this T[] self, Action<T> action, T exception)
         {

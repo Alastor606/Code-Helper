@@ -29,8 +29,9 @@ namespace CodeHelper
         
         private void Start()
         {
+            _testArray.PrintAll();
         }
-
+         
         private void Update()
         {
             _player.TransferControl2D(_speed, 15, KeyCode.Space);

@@ -20,6 +20,40 @@ namespace CodeHelper.Unity
             };
         }
 
+        internal static Vector2 Add(ref this Vector2 self, int value)
+        {
+            self.x += value;
+            self.y += value;
+            return self;
+        }
+        
+        internal static Vector2 Remove(ref this Vector2 self, int value)
+        {
+            self.x -= value;
+            self.y -= value;
+            return self;
+        }
+
+        internal static Vector2 Add(ref this Vector2 self, float value)
+        {
+            self.x += value;
+            self.y += value;
+            return self;
+        }
+        
+        internal static Vector2 Remove(ref this Vector2 self, float value)
+        {
+            self.x -= value;
+            self.y -= value;
+            return self;
+        }
+        
+        internal static bool MoreThen(this Vector2 self, Vector2 value)
+        {
+            if (self.x > value.x && self.y > value.y) return true;
+            else return false;
+        }
+
         /// <summary> Set X of vector </summary>
         internal static void SetX(this Vector3 self, float x) => self.x = x;
 

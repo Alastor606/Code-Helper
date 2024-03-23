@@ -2,6 +2,7 @@ using UnityEngine;
 using CodeHelper.Unity;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 namespace CodeHelper
 {
@@ -23,13 +24,13 @@ namespace CodeHelper
         [Header("Polygon move :")]
         [SerializeField] private List<Transform> _polygonTest;
         [SerializeField] private GameObject _bullet;
+        private TMP_InputField _field;
         
         private float _time;
         private int[] _testArray = new int[] { 1,2,3,4,5};
         
         private void Start()
         {
-            _testArray.PrintAll();
         }
          
         private void Update()

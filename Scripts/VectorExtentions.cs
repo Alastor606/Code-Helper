@@ -54,6 +54,9 @@ namespace CodeHelper.Unity
             else return false;
         }
 
+        internal static Vector2 Init(this Vector2 self, float value) => new (value, value);
+        internal static Vector3 Init(this Vector3 self, float value) => new(value, value, value);
+
         /// <summary> Set X of vector </summary>
         internal static void SetX(this Vector3 self, float x) => self.x = x;
 

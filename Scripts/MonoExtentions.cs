@@ -125,6 +125,15 @@ namespace CodeHelper.Unity
             }
             return res.ToArray();
         }
+
+        /// <summary>
+        /// Call in only in OnGizmos methods!
+        /// </summary>
+        internal static void DrawSphere(float radius, Transform startPoint, Color color = default)
+        {
+            if(color != default)Gizmos.color = color;
+            Gizmos.DrawWireSphere(startPoint.position, radius);
+        }
     }
 }
 

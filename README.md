@@ -1,6 +1,18 @@
 # Extentions methods for comfort Unity programming
 ## Here I have collected a large number of convenient and useful methods for faster use within Unity. Below will be described, in my opinion, the most interesting and requiring explanations.
-### The select method, accepts the Func<T> and returns the first item of collection suitable for the condition
+### New function - ***Creatnig code assets***
+There is two windows :
+
+- #### The script creation window where you need to enter the code and file name for the asset
+  
+![image](https://github.com/Alastor606/Unity-Code-Helper/assets/114815838/0a0d0979-4c91-415f-8891-04ecb32dcf0d)
+
+- #### Window for creating script assets, here you can specify the file and class name, and also create several instances at once
+
+![image](https://github.com/Alastor606/Unity-Code-Helper/assets/114815838/5f3ec148-28fa-45b9-ab48-2785257b242e)
+
+
+## The select method, accepts the Func<T> and returns the first item of collection suitable for the condition
 ```cs
 void MyFoo(int[] array)
 {

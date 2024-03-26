@@ -33,7 +33,7 @@ namespace CodeHelper.Editor
         [MenuItem("Assets/Create/Asset script", false, -1)]
         public static void SaveAsAsset()
         {
-            var filename = "Assets/Code Helper/Script Assets/" + Selection.activeObject.name + ".cs";
+            var filename = "Assets/Code Helper/Script Assets/" + Selection.activeObject.name + ".txt";
             if (!Directory.Exists("Assets/HelperPrefabs")) Directory.CreateDirectory("Assets/Code Helper/Script Assets/");
             var file = File.ReadAllText(AssetDatabase.GetAssetPath(Selection.activeObject));
             string pattern = @"class\s+(\w+)";
@@ -52,7 +52,7 @@ namespace CodeHelper.Editor
         private void SaveFile()
         {
             if (_code == string.Empty || _fileName == string.Empty) return;
-            var filename = "Assets/Code Helper/Script Assets/" + _fileName + ".cs";
+            var filename = "Assets/Code Helper/Script Assets/" + _fileName + ".txt";
             if (!Directory.Exists("Assets/HelperPrefabs")) Directory.CreateDirectory("Assets/Code Helper/Script Assets/");
             _message = "File creating";
             if (!File.Exists(filename))

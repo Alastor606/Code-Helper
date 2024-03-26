@@ -10,8 +10,8 @@ namespace CodeHelper.Editor
 
     public class SpawnAssets : EditorWindow
     {
-        private string _folderToSpawn, _filename;
-        private List<string> _assetNames;
+        private string _folderToSpawn, _filename, _className;
+        private List<string> _assetNames, _fileNames;
         private int _index, _scriptCount;
         private bool _show, _copyFilenameToClass, _multiSpawn;
 
@@ -23,20 +23,50 @@ namespace CodeHelper.Editor
             window.minSize = new Vector2(450, 600);
         }
 
-
-        private void OnEnable()
+        private void Refresh()
         {
             var path = "Assets/Code Helper/Script Assets";
-            if (Directory.Exists(path)) _assetNames = new(Directory.GetFiles(path));
+            if (Directory.Exists(path)) _assetNames = new(Directory.GetFiles(path,"*.txt"));
+            _fileNames = new();
+            foreach (var item in _assetNames) _fileNames.Add(Path.GetFileName(item));
         }
+
+        private void OnEnable() => Refresh();
 
         private void OnGUI()
         {
-            GUILayout.Label("Select folder path");
-            _folderToSpawn = EditorGUILayout.TextArea(_folderToSpawn);
-            _index = EditorGUILayout.Popup(_index, _assetNames.ToArray());
+            _folderToSpawn = EditorGUILayout.TextField(_folderToSpawn);
+            Event evt = Event.current;
+            Rect dropArea = GUILayoutUtility.GetRect(0.0f, 50.0f, GUILayout.ExpandWidth(true));
+            GUI.Box(dropArea, "Drag folder here!");
+            switch (evt.type)
+            {
+                case EventType.DragUpdated:
+                case EventType.DragPerform:
+                    if (!dropArea.Contains(evt.mousePosition))
+                        break;
+
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+
+                    if (evt.type == EventType.DragPerform)
+                    {
+                        DragAndDrop.AcceptDrag();
+
+                        foreach (string draggedObject in DragAndDrop.paths)
+                        {
+                            if (Directory.Exists(draggedObject))
+                            {
+                                _folderToSpawn = draggedObject;
+                                Repaint();
+                            }
+                        }
+                    }
+                    break;
+            }
+            _index = EditorGUILayout.Popup("Select asset",_index, _fileNames.ToArray());
             GUILayout.Space(10);
             if (GUILayout.Button("Create script")) Spawn();
+            if (GUILayout.Button("Refresh")) Refresh();
             _show = EditorGUILayout.Foldout(_show, "Optional settings");
             if (_show)
             {
@@ -49,39 +79,45 @@ namespace CodeHelper.Editor
 
         private void Spawn()
         {
-            var filename = _filename == string.Empty ? $"{_folderToSpawn}/{_assetNames[_index].Remove(0, 33)}" : _folderToSpawn + "/"+ _filename + ".cs";
+            var filename = _filename == string.Empty ? $"{_folderToSpawn}/{_assetNames[_index].Remove(0, 33)}.cs" : _folderToSpawn + "/"+ _filename  + ".cs";
             if (_multiSpawn)
             {
-                if (_copyFilenameToClass)
+                for (int i = 0; i < _scriptCount; i++)
                 {
-                    for (int i = 0; i < _scriptCount; i++)
-                    {
-                        var name = filename.Replace(".cs", i.ToString()) + ".cs";
-                        var file = File.ReadAllText(_assetNames[_index]);
-                        string pattern = @"class\s+(\w+)";
-                        Match match = Regex.Match(file, pattern);
-
-                        if (match.Success)
-                        {
-                            string currentClassName = match.Groups[1].Value;
-                            string newContent = file.Replace(currentClassName, _filename + i.ToString());
-                            File.WriteAllText(name, newContent);
-                        }
-                    }
+                    _className = _filename + i;
+                    CreateFolder(filename.Replace(".cs", $"{i}.cs"));
                 }
-                else
-                {
-                    for (int i = 0; i < _scriptCount; i++)
-                    {
-                        var name = filename.Replace(".cs", i.ToString()) + ".cs";
-                        File.Copy(_assetNames[_index], name, true);
-                    }
-                }
+            }
+            else
+            {
+                _className = _filename;
+                CreateFolder(filename);
             }
             
             AssetDatabase.Refresh();
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filename);
             EditorGUIUtility.PingObject(Selection.activeObject);
+        }
+
+        private void CreateFolder(string name)
+        {
+            if (_copyFilenameToClass)
+            {
+                var file = File.ReadAllText(_assetNames[_index]);
+                string pattern = @"class\s+(\w+)";
+                Match match = Regex.Match(file, pattern);
+
+                if (match.Success)
+                {
+                    string currentClassName = match.Groups[1].Value;
+                    string newContent = file.Replace(currentClassName, _className);
+                    File.WriteAllText(name, newContent);
+                }
+            }
+            else
+            {
+                File.Copy(_assetNames[_index], name, true);
+            }
         }
     }
 }

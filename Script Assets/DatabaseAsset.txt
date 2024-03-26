@@ -1,0 +1,11 @@
+using UnityEngine;
+
+static class Aboba 
+{
+	private static int _index;
+
+	private static void Start()
+	{
+		Debug.Log(_index);
+	}
+}
